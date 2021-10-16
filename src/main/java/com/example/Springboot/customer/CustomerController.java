@@ -56,17 +56,17 @@ public class CustomerController {
         }        return Status.FAILURE;
     }
 
-    @DeleteMapping("/customers/delete")
-    public Status deleteCustomers(@Valid @RequestBody Customer customer) {
-        List<Customer> customers = customerRepository.findAll();
-        for (Customer other : customers) {
-            if (other.equals(customer)) {
-                customer.setLoggedIn(false);
-                customerRepository.delete(customer);
-                return Status.SUCCESSFULLY_DELETED;
-            }
-        }       return Status.FAILURE;
-    }
+//    @DeleteMapping("/customers/delete")
+//    public Status deleteCustomers(@Valid @RequestBody Customer customer) {
+//        List<Customer> customers = customerRepository.findAll();
+//        for (Customer other : customers) {
+//            if (other.equals(customer)) {
+//                customer.setLoggedIn(false);
+//                customerRepository.delete(customer);
+//                return Status.SUCCESSFULLY_DELETED;
+//            }
+//        }       return Status.FAILURE;
+//    }
 
     @DeleteMapping("/customers/all")
     public Status deleteCustomers() {

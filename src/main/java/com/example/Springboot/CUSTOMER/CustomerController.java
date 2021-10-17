@@ -1,4 +1,4 @@
-package com.example.Springboot.customer;
+package com.example.Springboot.CUSTOMER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -65,17 +65,18 @@ public class CustomerController {
             }
         }        return Status.FAILURE;
     }
-
-//    @DeleteMapping("/customers/delete")
-//    public Status deleteCustomers(@Valid @RequestBody Customer customer) {
-//        List<Customer> customers = customerRepository.findAll();
-//        for (Customer other : customers) {
-//            if (other.equals(customer)) {
-//                customer.setLoggedIn(false);
-//                customerRepository.delete(customer);
-//                return Status.SUCCESSFULLY_DELETED;
-//            }
-//        }       return Status.FAILURE;
+//
+//    @PutMapping("/customers/{id}")
+//    public ResponseEntity<Customer> updateCustomer(@PathVariable(value = "id") Long customerId,
+//                                                   @Valid @RequestBody Customer customerDetails) throws ResourceNotFoundException {
+//        Customer customer = customerRepository.findById(customerId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + customerId));
+//
+//        customer.setEmail(customerDetails.getEmail());
+//        customer.setUsername(customerDetails.getUsername());
+//        customer.setPassword(customerDetails.getPassword());
+//        final Customer updatedCustomer = customerRepository.save(customer);
+//        return ResponseEntity.ok(updatedCustomer);
 //    }
 
     @DeleteMapping("/customers/all")

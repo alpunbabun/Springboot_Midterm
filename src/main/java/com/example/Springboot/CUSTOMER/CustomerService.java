@@ -1,4 +1,4 @@
-package com.example.Springboot.customer;
+package com.example.Springboot.CUSTOMER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +40,8 @@ public class CustomerService {
 
     @Transactional
     public void updateCustomer(Long customerId,
-                              String username,
-                              String email) {
+                               String password, String username,
+                               String email) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new IllegalStateException(
                         "customer with id" + customerId + "does not exist"

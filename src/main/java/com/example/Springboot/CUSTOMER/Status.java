@@ -1,4 +1,4 @@
-package com.example.Springboot.customer;
+package com.example.Springboot.CUSTOMER;
 
 public enum Status {
     SUCCESSFULLY_REGISTERED,

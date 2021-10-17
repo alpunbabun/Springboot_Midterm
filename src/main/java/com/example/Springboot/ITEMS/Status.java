@@ -1,0 +1,10 @@
+package com.example.Springboot.ITEMS;
+
+public enum Status {
+    SUCCESSFULLY_ADDED,
+    SUCCESSFULLY_LOGIN,
+    SUCCESSFULLY_LOGOUT,
+    SUCCESSFULLY_DELETED,
+    ITEM_ALREADY_EXISTS,
+    FAILURE
+}

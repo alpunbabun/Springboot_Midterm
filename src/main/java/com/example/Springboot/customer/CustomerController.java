@@ -1,18 +1,28 @@
 package com.example.Springboot.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 public class CustomerController {
+
+    private final CustomerService customerService;
+
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
     @Autowired
     CustomerRepository customerRepository;
+
+    @GetMapping("customers")
+    public List<Customer> getCustomers() {
+        return customerService.getCustomers();
+    }
 
     @PostMapping("/customers/register")
     public Status registerCustomer(@Valid @RequestBody Customer newCustomer) {
@@ -38,7 +48,7 @@ public class CustomerController {
         for (Customer other : customers) {
             if (other.equals(customer)) {
                 customer.setLoggedIn(true);
-                customerRepository.save(customer);
+//                customerRepository.save(customer);
                 return Status.SUCCESSFULLY_LOGIN;
             }
         }        return Status.FAILURE;
@@ -50,7 +60,7 @@ public class CustomerController {
         for (Customer other : customers) {
             if (other.equals(customer)) {
                 customer.setLoggedIn(false);
-                customerRepository.save(customer);
+//                customerRepository.save(customer);
                 return Status.SUCCESSFULLY_LOGOUT;
             }
         }        return Status.FAILURE;

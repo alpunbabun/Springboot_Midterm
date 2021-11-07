@@ -4,6 +4,7 @@ package com.example.Springboot.Entity;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,6 +53,10 @@ public class Customer {
         this.password = password;
         this.roles = roles;
     }
+
+    public <T> Customer(String firstName, String lastName, String email, String encode, List<T> role_user) {
+    }
+
     public Long getId() {
         return id;
     }

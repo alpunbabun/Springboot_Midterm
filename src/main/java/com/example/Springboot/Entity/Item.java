@@ -1,9 +1,6 @@
 package com.example.Springboot.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
@@ -14,6 +11,18 @@ public class Item {
     private @NotBlank String item_name;
     private @NotBlank String category;
     private @NotBlank int price;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public Item() {
     }

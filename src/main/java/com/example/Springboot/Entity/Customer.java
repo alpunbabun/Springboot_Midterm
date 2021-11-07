@@ -1,40 +1,74 @@
 package com.example.Springboot.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import java.util.Objects;@Entity
 
-@Table(name = "customer")
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "customer", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Customer {
-    private @Id @GeneratedValue long id;
-    private @NotBlank String email;
-    private @NotBlank String username;
-    private @NotBlank String password;
-    private @NotBlank boolean loggedIn;
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    private String email;
+
+    private String username;
+
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+
+    private Collection<Role> roles;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "customer")
+    private Set<Item> items = new HashSet<>();
 
     public Customer() {
     }
 
-    public Customer(@NotBlank String email,
-                    @NotBlank String username,
-                     @NotBlank String password) {
+    public Customer(String firstName, String lastName, String email, String username, String password, Collection<Role> roles) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.loggedIn = false;
+        this.roles = roles;
     }
-
-    public Customer(@NotBlank String username,
-                    @NotBlank String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     public String getEmail() {
         return email;
@@ -54,38 +88,10 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-    public boolean isLoggedIn() {
-        return loggedIn;
+    public Collection<Role> getRoles() {
+        return roles;
     }
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-        Customer customer= (Customer) o;
-        return
-//              Objects.equals(email, customer.email) &&
-                Objects.equals(username, customer.username) &&
-                Objects.equals(password, customer.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, username, password,
-                loggedIn);
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", loggedIn=" + loggedIn +
-                '}';
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

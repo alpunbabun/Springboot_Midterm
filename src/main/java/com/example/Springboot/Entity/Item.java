@@ -1,10 +1,12 @@
-package com.example.Springboot.ITEMS;
+package com.example.Springboot.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
+
 @Entity
 @Table(name = "item")
 public class Item {
@@ -62,6 +64,23 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+        Item item= (Item) o;
+        return
+//              Objects.equals(email, customer.email) &&
+                Objects.equals(item_name, item.item_name) &&
+                        Objects.equals(category, item.category) &&
+                Objects.equals(price, item.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, item_name, category, price);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.Springboot.CUSTOMER;
+package com.example.Springboot.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

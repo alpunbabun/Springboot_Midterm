@@ -1,5 +1,6 @@
-package com.example.Springboot.CUSTOMER;
+package com.example.Springboot.Repository;
 
+import com.example.Springboot.Entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

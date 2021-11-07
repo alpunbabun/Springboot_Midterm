@@ -1,5 +1,9 @@
-package com.example.Springboot.ITEMS;
+package com.example.Springboot.Controller;
 
+import com.example.Springboot.Entity.Item;
+import com.example.Springboot.Service.ItemService;
+import com.example.Springboot.ITEMS.Status;
+import com.example.Springboot.Repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +23,14 @@ public class ItemController {
     @Autowired
     ItemRepository itemRepository;
 
-    @GetMapping("item/get")
+    @GetMapping("items")
     public List<Item> getItems() {
         return itemService.getItems();
+    }
+
+    @GetMapping(value = "/item/{id}")
+    public Item getItem(@PathVariable("id") Long id) {
+        return itemService.findById(id);
     }
 
     @PostMapping("item/add")
@@ -42,18 +51,22 @@ public class ItemController {
         return Status.SUCCESSFULLY_ADDED;
     }
 
-    @DeleteMapping(path = "{itemId}")
-    public void deleteItem(
-            @PathVariable("itemId") Long itemId) {
-        itemService.deleteItem(itemId);
+    @PutMapping(value = "/item/{id}")
+    public Status updateItem(@PathVariable("id") Long id, @RequestBody Item item) {
+        this.itemService.updateItem(item, id);
+//        return item;
+        return Status.SUCCESSFULLY_UPDATED;
     }
 
-    @PutMapping(path = "{itemId}")
-    public void updateItem(
-            @PathVariable("itemId") Long itemId,
-            @RequestParam(required = false) String item,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) int price) {
-        itemService.updateItem(itemId, item, category, price);
+    @DeleteMapping(value = "/item/{id}")
+    public Status deleteItem(@PathVariable("id") Long id) {
+        itemService.deleteItemById(id);
+        return Status.SUCCESSFULLY_DELETED;
+    }
+
+    @DeleteMapping("/item/all")
+    public Status deleteItems() {
+        itemRepository.deleteAll();
+        return Status.SUCCESSFULLY_DELETED;
     }
 }

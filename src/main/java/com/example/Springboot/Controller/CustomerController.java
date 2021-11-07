@@ -1,5 +1,9 @@
-package com.example.Springboot.CUSTOMER;
+package com.example.Springboot.Controller;
 
+import com.example.Springboot.Service.CustomerService;
+import com.example.Springboot.CUSTOMER.Status;
+import com.example.Springboot.Entity.Customer;
+import com.example.Springboot.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,11 @@ public class CustomerController {
     @GetMapping("customers")
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
+    }
+
+    @GetMapping(value = "/customers/{id}")
+    public Customer getCustomer(@PathVariable("id") Long id) {
+        return customerService.findById(id);
     }
 
     @PostMapping("/customers/register")
@@ -65,19 +74,19 @@ public class CustomerController {
             }
         }        return Status.FAILURE;
     }
-//
-//    @PutMapping("/customers/{id}")
-//    public ResponseEntity<Customer> updateCustomer(@PathVariable(value = "id") Long customerId,
-//                                                   @Valid @RequestBody Customer customerDetails) throws ResourceNotFoundException {
-//        Customer customer = customerRepository.findById(customerId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + customerId));
-//
-//        customer.setEmail(customerDetails.getEmail());
-//        customer.setUsername(customerDetails.getUsername());
-//        customer.setPassword(customerDetails.getPassword());
-//        final Customer updatedCustomer = customerRepository.save(customer);
-//        return ResponseEntity.ok(updatedCustomer);
-//    }
+
+    @PutMapping(value = "/customers/{id}")
+    public Status updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
+        this.customerService.updateCustomer(customer, id);
+//        return customer;
+        return Status.SUCCESSFULLY_UPDATED;
+    }
+
+    @DeleteMapping(value = "/customers/{id}")
+    public Status deleteCustomer(@PathVariable("id") Long id) {
+        customerService.deleteCustomerById(id);
+        return Status.SUCCESSFULLY_DELETED;
+    }
 
     @DeleteMapping("/customers/all")
     public Status deleteCustomers() {
